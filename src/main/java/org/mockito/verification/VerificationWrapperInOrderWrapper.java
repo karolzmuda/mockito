@@ -11,7 +11,7 @@ import org.mockito.internal.verification.api.VerificationInOrderMode;
 public class VerificationWrapperInOrderWrapper implements VerificationMode {
     private final VerificationMode delegate;
 
-    public VerificationWrapperInOrderWrapper(VerificationWrapper<?> verificationWrapper, InOrderImpl inOrder) {
+    public VerificationWrapperInOrderWrapper(VerificationWrapper<?,?> verificationWrapper, InOrderImpl inOrder) {
         VerificationMode verificationMode = verificationWrapper.wrappedVerification;
 
         VerificationMode inOrderWrappedVerificationMode = wrapInOrder(verificationWrapper, verificationMode, inOrder);
@@ -29,7 +29,7 @@ public class VerificationWrapperInOrderWrapper implements VerificationMode {
         return VerificationModeFactory.description(this, description);
     }
 
-    private VerificationMode wrapInOrder(VerificationWrapper<?> verificationWrapper, VerificationMode verificationMode, InOrderImpl inOrder) {
+    private VerificationMode wrapInOrder(VerificationWrapper<?,?> verificationWrapper, VerificationMode verificationMode, InOrderImpl inOrder) {
         if (verificationMode instanceof VerificationInOrderMode) {
             final VerificationInOrderMode verificationInOrderMode = (VerificationInOrderMode)verificationMode;
             return new InOrderWrapper(verificationInOrderMode, inOrder);

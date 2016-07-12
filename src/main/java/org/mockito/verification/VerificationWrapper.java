@@ -3,7 +3,7 @@ package org.mockito.verification;
 import org.mockito.internal.verification.VerificationModeFactory;
 import org.mockito.internal.verification.api.VerificationData;
 
-public abstract class VerificationWrapper<WrapperType extends VerificationMode> implements VerificationMode {
+public abstract class VerificationWrapper<Self extends VerificationWrapper<Self,WrapperType>,WrapperType extends VerificationMode> implements VerificationMode {
 
     protected final WrapperType wrappedVerification;
 
@@ -15,29 +15,29 @@ public abstract class VerificationWrapper<WrapperType extends VerificationMode> 
         wrappedVerification.verify(data);
     } 
     
-    protected abstract VerificationMode copySelfWithNewVerificationMode(VerificationMode verificationMode);
+    protected abstract Self copySelfWithNewVerificationMode(VerificationMode verificationMode);
 
-    public VerificationMode times(int wantedNumberOfInvocations) {
+    public Self times(int wantedNumberOfInvocations) {
         return copySelfWithNewVerificationMode(VerificationModeFactory.times(wantedNumberOfInvocations));
     }
     
-    public VerificationMode never() {
+    public Self never() {
         return copySelfWithNewVerificationMode(VerificationModeFactory.atMost(0));
     }
 
-    public VerificationMode atLeastOnce() {
+    public Self atLeastOnce() {
         return copySelfWithNewVerificationMode(VerificationModeFactory.atLeastOnce());
     }
 
-    public VerificationMode atLeast(int minNumberOfInvocations) {
+    public Self atLeast(int minNumberOfInvocations) {
         return copySelfWithNewVerificationMode(VerificationModeFactory.atLeast(minNumberOfInvocations));
     }
 
-    public VerificationMode atMost(int maxNumberOfInvocations) {
+    public Self atMost(int maxNumberOfInvocations) {
         return copySelfWithNewVerificationMode(VerificationModeFactory.atMost(maxNumberOfInvocations));
     }
 
-    public VerificationMode only() {
+    public Self only() {
         return copySelfWithNewVerificationMode(VerificationModeFactory.only());
     }
     

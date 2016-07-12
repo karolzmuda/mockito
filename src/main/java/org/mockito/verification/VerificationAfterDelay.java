@@ -26,7 +26,7 @@ import org.mockito.Mockito;
  * See examples in javadoc for {@link Mockito#verify(Object, VerificationMode)}
  *
  */
-public interface VerificationAfterDelay extends VerificationMode {
+public interface VerificationAfterDelay extends VerificationModeAtLeast {
     
     /**
      * Verifies that there are exactly N invocations during the given period. This will wait the full period given.
@@ -47,13 +47,13 @@ public interface VerificationAfterDelay extends VerificationMode {
     /**
      * Verifies that there is are least N invocations during the given period. This will wait the full period given.
      */
-    VerificationMode atLeast(int minNumberOfInvocations);
+    VerificationModeAtLeast atLeast(int minNumberOfInvocations);
     
-    /**
-     * Verifies that there is are most N invocations during the given period. This will wait the full period given,
-     * unless too many invocations occur (in which case there will be an immediate failure)
-     */
-    VerificationMode atMost(int maxNumberOfInvocations);
+//    /**
+//     * Verifies that there is are most N invocations during the given period. This will wait the full period given,
+//     * unless too many invocations occur (in which case there will be an immediate failure)
+//     */
+//    VerificationMode atMost(int maxNumberOfInvocations);
     
     /**
      * Verifies that there the given method is invoked and is the only method invoked. This will wait the full 

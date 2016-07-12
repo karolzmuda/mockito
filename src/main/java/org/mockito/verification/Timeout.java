@@ -16,7 +16,7 @@ import org.mockito.internal.verification.VerificationOverTimeImpl;
  * Typically, you won't use this class explicitly. Instead use timeout() method on Mockito class.
  * See javadoc for {@link VerificationWithTimeout}
  */
-public class Timeout extends VerificationWrapper<VerificationOverTimeImpl> implements VerificationWithTimeout {
+public class Timeout extends VerificationWrapper<Timeout,VerificationOverTimeImpl> implements VerificationWithTimeout {
     
     /**
      * See the javadoc for {@link VerificationWithTimeout}
@@ -47,15 +47,17 @@ public class Timeout extends VerificationWrapper<VerificationOverTimeImpl> imple
     }
 
     @Override
-    protected VerificationMode copySelfWithNewVerificationMode(VerificationMode newVerificationMode) {
+    protected Timeout copySelfWithNewVerificationMode(VerificationMode newVerificationMode) {
         return new Timeout(wrappedVerification.copyWithVerificationMode(newVerificationMode));
     }
 
-    public VerificationMode atMost(int maxNumberOfInvocations) {
+    @Override
+    public Timeout atMost(int maxNumberOfInvocations) {
         throw atMostAndNeverShouldNotBeUsedWithTimeout();
     }
 
-    public VerificationMode never() {
+    @Override
+    public Timeout never() {
         throw atMostAndNeverShouldNotBeUsedWithTimeout();
     }
 

@@ -2347,7 +2347,7 @@ public class Mockito extends ArgumentMatchers {
      *
      * @return verification mode
      */
-    public static VerificationMode atLeast(int minNumberOfInvocations) {
+    public static VerificationModeAtLeast atLeast(int minNumberOfInvocations) {
         return VerificationModeFactory.atLeast(minNumberOfInvocations);
     }
 

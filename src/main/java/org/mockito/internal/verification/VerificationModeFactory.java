@@ -6,6 +6,7 @@
 package org.mockito.internal.verification;
 
 import org.mockito.verification.VerificationMode;
+import org.mockito.verification.VerificationModeAtLeast;
 
 public class VerificationModeFactory {
     
@@ -13,7 +14,7 @@ public class VerificationModeFactory {
         return atLeast(1);
     }
 
-    public static VerificationMode atLeast(int minNumberOfInvocations) {
+    public static VerificationModeAtLeast atLeast(int minNumberOfInvocations) {
         return new AtLeast(minNumberOfInvocations);
     }
 
@@ -46,5 +47,10 @@ public class VerificationModeFactory {
      */
     public static VerificationMode description(VerificationMode mode, String description) {
         return new Description(mode, description);
+    }
+
+    public static VerificationMode atLeastAndMost(int min, int max) {
+       
+        return new AtLeastAndAtMost(min,max);
     }
 }

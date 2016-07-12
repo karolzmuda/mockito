@@ -7,6 +7,7 @@ package org.mockitousage.stubbing;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.mockito.exceptions.misusing.CannotVerifyStubOnlyMock;
 import org.mockito.exceptions.misusing.MissingMethodInvocationException;
 import org.mockito.exceptions.verification.NoInteractionsWanted;
@@ -15,6 +16,7 @@ import org.mockitoutil.TestBase;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.fail;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.*;
 
@@ -25,6 +27,11 @@ public class BasicStubbingTest extends TestBase {
     @Before
     public void setup() {
         mock = mock(IMethods.class);
+    }
+    
+    @Test
+    public void testName() throws Exception {
+        verify(mock,after(300).atLeast(1).atMost(3)).canThrowException();
     }
     
     @Test
