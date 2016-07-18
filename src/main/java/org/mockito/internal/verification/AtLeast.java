@@ -53,6 +53,7 @@ public class AtLeast implements VerificationInOrderMode, VerificationModeAtLeast
         return VerificationModeFactory.description(this, description);
     }
     
+    @Override
     public VerificationMode atMost(int max){
         return VerificationModeFactory.atLeastAndMost(minCount,max);
     }
