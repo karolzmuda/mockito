@@ -4,19 +4,6 @@
 
 package org.mockitousage.verification;
 
-import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.rules.ExpectedException.none;
-import static org.mockito.Mockito.after;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.junit.MockitoJUnit.rule;
-import static org.mockitoutil.Stopwatch.createNotStarted;
-
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -29,6 +16,18 @@ import org.mockito.exceptions.base.MockitoAssertionError;
 import org.mockito.junit.MockitoRule;
 import org.mockitousage.IMethods;
 import org.mockitoutil.Stopwatch;
+
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.rules.ExpectedException.none;
+import static org.mockito.Mockito.*;
+import static org.mockito.junit.MockitoJUnit.rule;
+import static org.mockitoutil.Stopwatch.createNotStarted;
 
 public class VerificationAfterDelayTest {
 
@@ -76,6 +75,21 @@ public class VerificationAfterDelayTest {
 
         // then
         verify(mock, after(100).atLeast(1)).oneArg('1');
+    }
+
+    // This test should pass but it doesn't.
+    // This is because calling 'after(100).atLeast(2).atMost(3)' in current implementation
+    // returns exactly the same VerificationMode as calling 'after(100).atMost(3)'
+    @Test
+    public void shouldFailVerificationWithWrongTimesForAtLeastAtMost() throws Exception {
+        // given
+        callAsyncWithDelay(mock, '1', 20, MILLISECONDS);
+
+        // then
+        verify(mock, times(0)).oneArg('1');
+
+        exception.expect(MockitoAssertionError.class);
+        verify(mock, after(100).atLeast(2).atMost(3)).oneArg('1');
     }
 
     @Test
